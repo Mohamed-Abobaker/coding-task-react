@@ -1,23 +1,13 @@
-import logo from './logo.svg';
 import './App.css';
+import Donations from './donations';
+import AddDonation from './addDonation';
 
 function App() {
+  const baseUrl = 'https://n3o-coding-task-react.azurewebsites.net/api/v1/donationItems';
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AddDonation baseUrl={baseUrl}/>
+      <Donations baseUrl={baseUrl}/>
     </div>
   );
 }
