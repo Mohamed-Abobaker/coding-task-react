@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 
-const AddDonation = ({ themes, locations, baseUrl, donations }) => {
+const AddDonation = ({ themes, locations, baseUrl, donations, trigger, setTrigger }) => {
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     Name: "",
     Location: "",
     Theme: "",
   });
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const donationNames = donations.map((e) => e.name);
     if (donationNames.includes(formData.Name)) {
       alert("This donation name already exists. Please select a unique name");
       setFormData({ ...formData, Name: "" });
     } else {
-      fetch(`${baseUrl}`, {
+      setLoading(true);
+      await fetch(`${baseUrl}`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -22,6 +24,8 @@ const AddDonation = ({ themes, locations, baseUrl, donations }) => {
           "Content-Type": "application/json",
         },
       });
+      setTrigger(trigger + 1);
+      setLoading(false);
     }
   };
 
@@ -36,6 +40,8 @@ const AddDonation = ({ themes, locations, baseUrl, donations }) => {
       setFormData({ ...formData, [e.target.name]: e.target.value });
     }
   };
+
+  if (loading) return <h2>Submitting</h2>;
 
   return (
     <div style={{ margin: "5%" }}>

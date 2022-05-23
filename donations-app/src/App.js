@@ -8,6 +8,7 @@ function App() {
   const [donations, setDonations] = useState([]);
   const [themes, setThemes] = useState([]);
   const [locations, setLocations] = useState([]);
+  const [trigger, setTrigger] = useState(1)
 
   useEffect(() => {
     Promise.all([
@@ -23,12 +24,12 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [trigger]);
 
   return (
     <div className="App">
-      <AddDonation themes={themes} locations={locations} donations={donations} baseUrl={baseUrl}/>
-      <Donations donations={donations} baseUrl={baseUrl}/>
+      <AddDonation trigger={trigger} setTrigger={setTrigger} themes={themes} locations={locations} donations={donations} baseUrl={baseUrl}/>
+      <Donations donations={donations}/>
     </div>
   );
 }
